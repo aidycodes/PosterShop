@@ -10,7 +10,7 @@ import { headers } from "next/headers"
 import SignOut from "./buttons/sign-out"
 import { z } from "zod"
 import { CartData } from "./buttons/nav-cart"
-
+import MobileMenu from "./mobileMenu/mobileMenu"
 
 
 interface NavbarProps {
@@ -57,7 +57,11 @@ const userData: UserDetails = await authRes.json()
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <Menu className="h-6 w-6 mr-4 md:hidden" />
+              <div className="h-6 w-6 mr-4 md:hidden">
+              <MobileMenu>
+              <Menu  />
+              </MobileMenu>
+              </div>
               <ShopName name="PrintPerfect" direction="forward" />
             </div>    
             <NavLinks categories={categories} />

@@ -32,7 +32,7 @@ const NavLinks = ({categories}: {categories: Category[]}) => {
                     ) : (
                         <Link key={link.href} href={link.href}>
                             <div className="flex  items-center space-x-1 transition-colors text-gray-600 hover:text-blue-500 cursor-pointer">
-                                {link.label}
+                                {link.label}  
                             </div>
                         </Link>
                     )

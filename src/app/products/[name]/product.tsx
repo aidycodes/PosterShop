@@ -1,11 +1,12 @@
 'use client'
 import React, { useState } from 'react';
-import { Plus, Minus, ShoppingCart, Check, X, AlertCircle } from 'lucide-react';
+import { Plus, Minus, ShoppingCart } from 'lucide-react';
 import ProductStock from '@/components/products/product-stock';
 import ImageComponent from './ImageComponent';
 import Suggestions from '@/components/Suggestions/suggestions';
 import useAddItemToCart from '@/app/queryhooks/useAddItemToCart';
 import { extractASize } from '@/lib/utils';
+import { OptionsProps } from './page';
 
 export interface ProductProps {
   id: string;
@@ -15,20 +16,11 @@ export interface ProductProps {
   description: string;
   stock: number;
   sku?: string;
-  options: {
-    sizes: { [key: string]: string | number };
-    stripeIds: { [key: string]: string };
-    Stock: { Small: number 
-        Medium: number
-        Large: number
-        XLarge: number
-    };
+  options: OptionsProps;
   };
-}
 
-const ProductPage = ({ id, productname, image, description, stock, sku, options }: ProductProps) => {
 
-const sizes = Object.entries(options?.sizes || {})
+const ProductPage = ({ id, productname, image, description, sku, options }: ProductProps) => {
 
   const [selectedSize, setSelectedSize] = useState<[string, number]>(['Small (A3 - 11.7" × 16.5" / 297 × 420 mm)', 10]);
   const [withFrame, setWithFrame] = useState(false);
@@ -227,11 +219,11 @@ const selectedSizeStock = options?.Stock?.[
                 £{totalPrice.toFixed(2)}
               </span>
             </div>
-            <button onClick={addToCart} disabled={selectedSizeStock === 0} 
+            <button onClick={addToCart} disabled={selectedSizeStock === 0 || isPending} 
             className={`w-full bg-blue-500 cursor-pointer text-white py-4 rounded-lg text-lg
-             font-medium hover:bg-blue-600 transition-colors flex items-center justify-center space-x-2 group ${selectedSizeStock === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}>
-              <ShoppingCart className="w-6 h-6 transform group-hover:scale-110 transition-transform" />
-              <span>Add to Cart</span>
+             font-medium hover:bg-blue-600 transition-colors flex items-center justify-center space-x-2 group ${selectedSizeStock === 0 || isPending ? 'opacity-50 cursor-not-allowed' : ''}`}>
+              <ShoppingCart className="w-6 h-6 transform group-hover:scale-110 transition-transform mr-2" />
+              {isPending ? 'Adding to cart...' : 'Add to Cart'}
             </button>
           </div>
         </div>
